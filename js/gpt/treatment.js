@@ -65,6 +65,7 @@ function (declare, GP) {
   // iterate through results and
   // organize into correct attributes
   function organize(result) {
+    final_score = 0;
     for(var key in attributes) {
       if(attributes.hasOwnProperty(key)) {
         assignResult(key);
