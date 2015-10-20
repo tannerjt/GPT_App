@@ -5,8 +5,7 @@
 define(["dojo/_base/declare", "esri/tasks/Geoprocessor"],
 function (declare, GP) {
   // private objects
-  var study_area_stats = undefined;
-  var final_score = undefined;
+  var final_score = 0;
   var attributes = {
     'WUI' : {
       'label' : 'Wildland Urban Interface Presence',
@@ -66,7 +65,39 @@ function (declare, GP) {
   // iterate through results and
   // organize into correct attributes
   function organize(result) {
-    console.log(result);
+    for(var key in attributes) {
+      if(attributes.hasOwnProperty(key)) {
+        assignResult(key);
+        final_score += attributes[key].score;
+      }
+    }
+
+    function assignResult(key) {
+      var layers = attributes[key].layers;
+      attributes[key].score = 0; // init 0
+      for(var i = 0; i < layers.length; i++) {
+        layers[i].breakdown = result[layers[i].name];
+        // score is the greatest of all layers in 
+        // a particular variable
+        // stats = are for treatment area
+        // summary = is for entire study area
+        var scores = getScores(layers[i].breakdown.stats);
+        scores.sort().reverse();
+        if(scores[0] > attributes[key].score) {
+          attributes[key].score = +scores[0];
+        }
+      }
+    }
+
+    function getScores(stats) {
+      var scores = [];
+      for(var num in stats) {
+        if(stats.hasOwnProperty(num)) {
+          scores.push(+num);
+        }
+      }
+      return scores;
+    }
   }
 
   return declare(null, {
@@ -83,9 +114,6 @@ function (declare, GP) {
     },
     getScore : function () {
       return final_score;
-    },
-    getStudyAreaStats : function () {
-      return study_area_stats;
     },
     getResult : function () {
       return attributes;

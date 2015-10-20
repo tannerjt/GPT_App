@@ -41,7 +41,8 @@ function (Map, Draw, Graphic, SFS, Treatment, dom, on) {
     map.graphics.add(graphic);
     treatment = new Treatment(config.kimo_gp);
     treatment.runAnalysis(JSON.stringify(evt.geometry), function (r) {
-      
+      console.log(treatment.getScore());
+      console.log(treatment.getResult());
     });
   }
 });
