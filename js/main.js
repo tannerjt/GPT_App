@@ -15,7 +15,7 @@ require(["esri/map",
          "dojo/domReady!"],
 function (Map, Draw, Graphic, SFS, Treatment, dom, on) {
   var map, toolbar;
-  var treatments = []; // store multiple treatments
+  var results = []; // store multiple treatments
 
   map = new Map("map", {
     center : [-81.37, 35.13],
@@ -41,6 +41,7 @@ function (Map, Draw, Graphic, SFS, Treatment, dom, on) {
     map.graphics.add(graphic);
     treatment = new Treatment(config.kimo_gp);
     treatment.runAnalysis(JSON.stringify(evt.geometry), function (r) {
+      results.push(treatment);
       console.log(treatment.getScore());
       console.log(treatment.getResult());
     });
