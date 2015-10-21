@@ -12,8 +12,9 @@ require(["esri/map",
          "gpt/treatment",
          "dojo/dom",
          "dojo/on",
+         "dojo/dom-class",
          "dojo/domReady!"],
-function (Map, Draw, Graphic, SFS, Treatment, dom, on) {
+function (Map, Draw, Graphic, SFS, Treatment, dom, on, domClass) {
   var map, toolbar;
   var results = []; // store multiple treatments
 
@@ -29,6 +30,7 @@ function (Map, Draw, Graphic, SFS, Treatment, dom, on) {
     toolbar.on('draw-end', addToMap);
     on(dom.byId('draw'), 'click', function (e) {
       e.preventDefault();
+      domClass.add(e.target, 'disabled');
       toolbar.activate(Draw['POLYGON']);
     });
   }
@@ -41,6 +43,7 @@ function (Map, Draw, Graphic, SFS, Treatment, dom, on) {
     map.graphics.add(graphic);
     treatment = new Treatment(config.kimo_gp);
     treatment.runAnalysis(JSON.stringify(evt.geometry), function (r) {
+      domClass.remove(dom.byId('draw'), 'disabled');
       results.push(treatment);
       console.log(treatment.getScore());
       console.log(treatment.getResult());
