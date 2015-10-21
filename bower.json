@@ -1,0 +1,26 @@
+{
+  "name": "GPT_App",
+  "version": "1.0.0",
+  "homepage": "https://github.com/tannerjt/GPT_App",
+  "authors": [
+    "Joshua Tanner <biolsurfer85@gmail.com>"
+  ],
+  "description": "Geoprioritization of Proposed Fire Treatment Areas for Masters Final Project: North Carolina State University",
+  "main": "index.html",
+  "keywords": [
+    "ncsu",
+    "mgist",
+    "nps"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
