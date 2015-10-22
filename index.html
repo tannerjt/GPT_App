@@ -18,6 +18,7 @@
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/handlebars/handlebars.min.js"></script>
         <script>
           var package_path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
           dojoConfig = {
@@ -38,34 +39,55 @@
         <![endif]-->
         <nav class="navbar navbar-default">
           <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">
-                GPT App
-              </a>
-              <ul class="nav navbar-nav">
-                <li><a href="#">About Project</a></li>
-                <li><a href="#">View Layers in ArcGIS Online</a></li>
-              </ul>
-              <!-- <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
-              </ul> -->
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-tree-conifer"></span> GPT</a>
             </div>
-          </div>
-        </nav>
 
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link</a></li> -->
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="col-md-12 col-sm-12 col-lg-6">
-                    <div id="map">
-                        
+                <div class="col-md-12 col-sm-12 col-lg-5">
+                    <div id="map" class="map">
+                        <div id="BasemapToggle"></div>
                     </div>
-                    <div id="toolbar" class="pull-right">
-                      <a class='btn btn-primary' href="#" id="draw"><span class="glyphicon glyphicon-pencil"></span> Draw Treatment Poly</a>
-                      <a class='btn btn-primary' href="#" id="loading"><span class="glyphicon glyphicon-refresh"></span> Loading</a>
-
+                    <div id="toolbar">
+                      <!--
+                      <a class='btn btn-primary' href="#" id="erase"><span class="glyphicon glyphicon-erase"></span> Clear All</a> --> 
+                      <a class='btn btn-primary' href="#" id="draw"><span class="glyphicon glyphicon-pencil"></span> Draw Treatment Poly</a>   
                     </div>
                 </div>
-                <div class="col-md-12 col-sm-12 col-lg-5">
+                <div class="col-md-12 col-sm-12 col-lg-7">
+                    <div id="intro">
+                        <h3>Getting Started</h3>
+                        <p>Select <code>Draw Treatment Poly</code> and draw on the map (<i>within he study area</i>).  The polygon represents a fire treatment area and can be submitted with a <code>double click</code> of your mouse.  The GPT (Geoprioritization App) will then analyze the area and determine a score based on many different variables.  The final score can help compare different proposals to determine which is the highest priorty.  This application is just a planning utility and should be used with other forms of analysis.  Please see disclaimer below.</p>
+                        <h3>Disclaimer</h3>
+                        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                        THE SOFTWARE.</p>
+                    </div>
+                    <div class="jumbotron" id="jumbotron">
+                        <h2>Hold Tight!  Analyzing Your Input Now.</h2>
+                        <p>This may take a few seconds...</p>
+                    </div>
                     <div id="stats">
                         
                     </div>
@@ -75,6 +97,73 @@
 
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
+
+        <!-- precompile this later on -->
+        <script id="results-template" type="text/x-handlebars-template">
+            <div id="results-container">
+                <div id="final-score">
+                    <h3>Final Score - <span id='score' class='badge'>{{score}} Points</span></h3>
+                </div>
+                <div id="variable-list">
+                    <ul>
+                    {{#each res}}
+                        <li><a href="#{{@key}}-details" class="variable-link">{{this.label}}</a> - {{this.score}}</li>
+                    {{/each}}
+                    </ul>
+                </div>
+                <div id="details-list">
+                    <h3>Breakdown</h3>
+                    {{#each res}}
+                        <h3>{{this.label}} - <span class='badge'>{{this.score}} Points</span></h3>
+                        <div id="{{@key}}-details">
+                            {{#each this.layers}}
+                                <h4>{{label}}</h4>
+                                <div class="well">
+                                <table class='table table-condensed'>
+                                    <caption>Scores for <b>Proposed Treatment Area</b></caption>
+                                    <thead>
+                                        <tr>
+                                            <th>Score</th>
+                                            <th>Description</th>
+                                            <th>Affected Cells (30 m^2)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.breakdown.stats}}
+                                        <tr>
+                                            <td>{{@key}}</td>
+                                            <td>{{this.desc}}</td>
+                                            <td>{{this.total}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                                <table class='table table-condensed'>
+                                    <caption>Scores for <b>Entire Study Area</b></caption>
+                                    <thead>
+                                        <tr>
+                                            <th>Score</th>
+                                            <th>Description</th>
+                                            <th>Affected Cells (30 m^2)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.breakdown.summary}}
+                                        <tr>
+                                            <td>{{@key}}</td>
+                                            <td>{{this.desc}}</td>
+                                            <td>{{this.total}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                                </div><!-- end well -->
+                            {{/each}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

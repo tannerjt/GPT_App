@@ -14,53 +14,53 @@ function (declare, GP) {
               'label' : 'Wildland Urban Interface Presence',
               'score' : undefined,
               'layers' : [
-                { name : 'powerlines' },
-                { name : 'pipelines' },
-                { name : 'facilities' },
-                { name : 'private_community' },
-                { name : 'private_structure' }
+                { name : 'powerlines', label : 'Powerlines' },
+                { name : 'pipelines', label : 'Pipelines' },
+                { name : 'facilities', label : 'Facilities' },
+                { name : 'private_community', label : 'Private Communities' },
+                { name : 'private_structure', label : 'Private Structures' }
               ]
             },
             'DEV' : {
               'label' : 'Distance to Developed Areas',
               'score' : undefined,
               'layers' : [
-                { name : 'distance_to_developed_areas'}
+                { name : 'distance_to_developed_areas', label : 'Distance to Developed Areas'}
               ]
             },
             'FUEL' : {
               'label' : 'Fuel Continuity',
               'score' : undefined,
               'layers' : [
-                { name : 'fire_continuity' }
+                { name : 'fire_continuity', label : 'Fuel Continuity' }
               ]
             },
             'RESIS' : {
               'label' : 'Resistance to Control',
               'score' : undefined,
               'layers' : [
-                { name : 'resistance_to_control' }
+                { name : 'resistance_to_control', label : 'Resistance to Control' }
               ]
             },
             'TE_RES' : {
-              'label' : 'Fire Dependent T&amp;E Species',
+              'label' : 'Fire Dependent T&E Species',
               'score' : undefined,
               'layers' : [
-                { name : 'fire_dependent_t_e_species'}
+                { name : 'fire_dependent_t_e_species', label : 'Fire Dependent T&E Species'}
               ]
             },
             'RARE' : {
               'label' : 'Unique/Rare/Remnant Community',
               'score' : undefined,
               'layers' : [
-                { name : 'unique_and_rare_t_e' }
+                { name : 'unique_and_rare_t_e', label : 'Unique/Rare/Remnant Community' }
               ]
             },
             'CULTURE' : {
               'label' : 'Cultural Values Presence',
               'score' : undefined,
               'layers' : [
-                { name : 'cultural_values' }
+                { name : 'cultural_values', label : 'Cultural Values Presence' }
               ]
             }
           };
