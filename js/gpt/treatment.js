@@ -83,7 +83,7 @@ function (declare, GP) {
           // stats = are for treatment area
           // summary = is for entire study area
           var scores = getScores(layers[i].breakdown.stats);
-          scores.sort().reverse();
+          scores.sort(sortNumber).reverse();
           if(scores[0] > this.attributes[key].score) {
             this.attributes[key].score = +scores[0];
           }
@@ -98,6 +98,10 @@ function (declare, GP) {
           }
         }
         return scores;
+      }
+
+      function sortNumber(a, b) {
+        return a - b;
       }
     },
     runAnalysis : function (input_json, cb) {
