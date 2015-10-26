@@ -11,7 +11,7 @@
 }
 
 #toolbar {
-  margin-top : 10px;
+  margin : 10px 0;
   width : 100%;
   text-align : right;
 }
@@ -35,4 +35,8 @@
   right: 20px;
   z-index: 50;
   border: none;
+}
+
+#poly-stats {
+  display : none;
 }

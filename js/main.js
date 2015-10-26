@@ -2,7 +2,8 @@
 // add additional study areas GP services here
 var config = {
   kimo_gp : 'http://152.46.16.228/arcgis/rest/services/GetTreatmentScore/GPServer/KIMO_MaskTreatment',
-  boundary : 'http://152.46.16.228/arcgis/rest/services/kimo_analysis/MapServer/34'
+  boundary : 'http://152.46.16.228/arcgis/rest/services/kimo_analysis/MapServer/34',
+  geometryService : 'http://152.46.16.228/arcgis/rest/services/Utilities/Geometry/GeometryServer'
 };
 // *******************************************
 
@@ -13,11 +14,12 @@ require(["esri/map",
          "esri/layers/FeatureLayer",
          "esri/dijit/BasemapToggle",
          "gpt/treatment",
+         "gpt/geometry",
          "dojo/dom",
          "dojo/on",
          "dojo/dom-class",
          "dojo/domReady!"],
-function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, dom, on, domClass) {
+function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geometry, dom, on, domClass) {
   var map, toolbar, boundary, toggle;
   var results = []; // store multiple treatments
 
@@ -43,15 +45,27 @@ function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, dom, 
     on(dom.byId('draw'), 'click', function (e) {
       e.preventDefault();
       map.graphics.clear();
+      $("#poly-stats").fadeOut();
+      $("#stats").html('').hide();
+      $("#total-area-raster").html('calculating');
+      $("#intro").fadeIn();
       domClass.add(e.target, 'disabled');
       toolbar.activate(Draw['POLYGON']);
     });
   }
 
   function addToMap(evt) {
+    // get poly stats
+    var geometry = new Geometry(config.geometryService, evt.geometry, function (r) {
+      $("#total-area").html(+r.area.toFixed(2));
+      $("#perimeter").html(+r.length.toFixed(2));
+      $("#poly-stats").show('slow');
+    });
+
     // convert to pure dojo
     $("#intro").hide();
     $("#stats").hide();
+    $("#poly-stats").hide();
     $("#jumbotron").fadeIn();
     var symbol, graphic, treatment;
     toolbar.deactivate();
@@ -74,5 +88,18 @@ function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, dom, 
     var source = dom.byId('results-template').innerHTML;
     var template = Handlebars.compile(source);
     dom.byId('stats').innerHTML = template({score : score, res : res});
+
+    // render updated study poly stats
+    var totalArea = 0;
+    for(var key in res) {
+      if(res.hasOwnProperty(key)) {
+        for (var score in res[key].layers[0].breakdown.stats) {
+          totalArea += res[key].layers[0].breakdown.stats[score].total;
+        }
+      }
+      break;
+    }
+    totalArea = totalArea * Math.pow(25,2) * 0.000247105;
+    $("#total-area-raster").html(totalArea.toFixed(2) + " acres");
   }
 });
