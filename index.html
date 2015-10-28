@@ -15,6 +15,10 @@
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/mapping.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/button.css">
+
+        <script src="js/vendor/shp.js"></script>
+        <script src="js/vendor/jsonConverters.js"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -53,8 +57,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li> -->
+                <li><a href="https://github.com/tannerjt/GPT_App/wiki/About" target="_blank">Wiki</a></li>
+                <!-- <li><a href="#">Link</a></li> -->
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
@@ -66,8 +70,10 @@
                         <div id="BasemapToggle"></div>
                     </div>
                     <div id="toolbar">
-                      <!--
-                      <a class='btn btn-primary' href="#" id="erase"><span class="glyphicon glyphicon-erase"></span> Clear All</a> --> 
+                      <span class="btn btn-default btn-file">
+                        <span class="glyphicon glyphicon-upload"></span> Upload Shapefile (.zip) <input type="file" name="files[0]" id="shp-upload">
+                    </span>
+                      <!-- <input type='file' class='btn btn-primary' href="#" id="upload"><span class="glyphicon glyphicon-cloud-upload"></span> Load Shapefile</a>  -->
                       <a class='btn btn-primary' href="#" id="draw"><span class="glyphicon glyphicon-pencil"></span> Draw Treatment Poly</a>   
                     </div>
                     <div id="poly-stats" class="well">
@@ -84,6 +90,7 @@
                     <div id="intro">
                         <h3>Getting Started</h3>
                         <p>Select <code>Draw Treatment Poly</code> and draw on the map (<i>within the study area</i>).  The polygon represents a fire treatment area and can be submitted with a <code>double click</code> of your mouse.  The GPT (Geoprioritization App) will then analyze the area and determine a score based on many different variables.  The final score can help compare different proposals to determine which is the highest priorty.  This application is just a planning utility and should be used with other forms of analysis.  Please see disclaimer below.</p>
+                        <p>If you want to upload a shapefile of the treatment area instead.  Use the <code>Load Shapefile</code> utility to load your <i>Zipped Shapefile</i>.</p>
                         <h3>Disclaimer</h3>
                         <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
                         IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

@@ -15,11 +15,12 @@ require(["esri/map",
          "esri/dijit/BasemapToggle",
          "gpt/treatment",
          "gpt/geometry",
+         "gpt/shapefileUploader",
          "dojo/dom",
          "dojo/on",
          "dojo/dom-class",
          "dojo/domReady!"],
-function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geometry, dom, on, domClass) {
+function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geometry, ShapeUploader, dom, on, domClass) {
   var map, toolbar, boundary, toggle;
   var results = []; // store multiple treatments
 
@@ -29,30 +30,53 @@ function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geome
     basemap : "topo"
   });
   map.on('load', activateToolbar);
+
   // boundary layer
   boundary = new FeatureLayer(config.boundary);
   map.addLayer(boundary);
+
   // basemap switcher
-  toggle = new BasemapToggle({
-        map: map,
-        basemap: "satellite"
-      }, "BasemapToggle");
-      toggle.startup();
+  toggle = new BasemapToggle({ map: map, basemap: "satellite" }, "BasemapToggle");
+  toggle.startup();
 
   function activateToolbar() {
+    // activate draw
     toolbar = new Draw(map);
     toolbar.on('draw-end', addToMap);
     on(dom.byId('draw'), 'click', function (e) {
       e.preventDefault();
+      domFuncs.thinking();
       map.graphics.clear();
+      domClass.add(e.target, 'disabled');
+      toolbar.activate(Draw['POLYGON']);
+    });
+    // activate file upload
+    var shapeUploader = new ShapeUploader();
+    $("#shp-upload").on("change", function (evt) {
+      domFuncs.getResults();
+      map.graphics.clear();
+      domClass.add(evt.target, 'disabled');
+      shapeUploader.readShp(evt, function (result) {
+        addToMap(result.features[0]);
+      });
+    });
+  }
+
+  // various dom functions
+  var domFuncs = {
+    thinking : function () {
       $("#poly-stats").fadeOut();
       $("#stats").html('').hide();
       $("#total-area-raster").html('calculating');
       $("#intro").fadeIn();
-      domClass.add(e.target, 'disabled');
-      toolbar.activate(Draw['POLYGON']);
-    });
-  }
+    },
+    getResults : function () {
+      $("#intro").hide();
+      $("#stats").hide();
+      $("#poly-stats").hide();
+      $("#jumbotron").fadeIn();
+    }
+  };
 
   function addToMap(evt) {
     // get poly stats
@@ -62,11 +86,8 @@ function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geome
       $("#poly-stats").show('slow');
     });
 
-    // convert to pure dojo
-    $("#intro").hide();
-    $("#stats").hide();
-    $("#poly-stats").hide();
-    $("#jumbotron").fadeIn();
+    domFuncs.getResults();
+
     var symbol, graphic, treatment;
     toolbar.deactivate();
     symbol = new SFS();
