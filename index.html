@@ -152,7 +152,7 @@
                                             <td>{{@key}}</td>
                                             <td>{{this.desc}}</td>
                                             <!--<td>{{this.total}}</td>-->
-                                            <td>{{#toAcres}}{{this.total}}{{/toAcres}}</td>
+                                            <td>{{#toAcresTreatment}}{{this.total}}{{/toAcresTreatment}}</td>
                                         </tr>
                                         {{/each}}
                                     </tbody>
@@ -173,7 +173,7 @@
                                             <td>{{@key}}</td>
                                             <td>{{this.desc}}</td>
                                             <!--<td>{{this.total}}</td>-->
-                                            <td>{{#toAcres}}{{this.total}}{{/toAcres}}</td>
+                                            <td>{{#toAcresStudy}}{{this.total}}{{/toAcresStudy}}</td>
                                         </tr>
                                         {{/each}}
                                     </tbody>
@@ -186,8 +186,41 @@
             </div>
         </script>
         <script>
-            Handlebars.registerHelper('toAcres', function (options) {
-                return (options.fn(this) * Math.pow(25,2) * 0.000247105).toFixed(2);
+            // calculation for treatment poly
+            Handlebars.registerHelper('toAcresTreatment', function (options) {
+                var totalCells = 0;
+                var data = options.data.root.res;
+                for(var category in data) {
+                    if(data.hasOwnProperty(category)) {
+                        var scores = data[category].layers[0].breakdown.stats;
+                        for(var score in scores) {
+                            if(scores.hasOwnProperty(score)) {
+                                totalCells += scores[score].total;
+                            }
+                        }
+                    }
+                    break;
+                }
+                console.log(totalCells);
+                return (options.fn(this) * Math.pow(25,2) * 0.000247105).toFixed(2) + " (" + ((options.fn(this) / totalCells) * 100).toFixed(2) + "%)";
+            });
+            // calculation for entire study area
+            Handlebars.registerHelper('toAcresStudy', function (options) {
+                var totalCells = 0;
+                var data = options.data.root.res;
+                for(var category in data) {
+                    if(data.hasOwnProperty(category)) {
+                        var scores = data[category].layers[0].breakdown.summary;
+                        for(var score in scores) {
+                            if(scores.hasOwnProperty(score)) {
+                                totalCells += scores[score].total;
+                            }
+                        }
+                    }
+                    break;
+                }
+                console.log(totalCells);
+                return (options.fn(this) * Math.pow(25,2) * 0.000247105).toFixed(2) + " (" + ((options.fn(this) / totalCells) * 100).toFixed(2) + "%)";
             });
         </script>
 
