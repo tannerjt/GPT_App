@@ -23,6 +23,9 @@
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="bower_components/handlebars/handlebars.min.js"></script>
+        <!-- CDN for HighCharts -->
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/modules/exporting.js"></script>
         <script>
           var package_path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
           dojoConfig = {
@@ -201,7 +204,6 @@
                     }
                     break;
                 }
-                console.log(totalCells);
                 return (options.fn(this) * Math.pow(25,2) * 0.000247105).toFixed(2) + " (" + ((options.fn(this) / totalCells) * 100).toFixed(2) + "%)";
             });
             // calculation for entire study area
@@ -219,7 +221,6 @@
                     }
                     break;
                 }
-                console.log(totalCells);
                 return (options.fn(this) * Math.pow(25,2) * 0.000247105).toFixed(2) + " (" + ((options.fn(this) / totalCells) * 100).toFixed(2) + "%)";
             });
         </script>

@@ -102,6 +102,7 @@ function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geome
       // console.log(treatment.getScore());
       // console.log(treatment.getResult());
       renderResults(treatment.getScore(), r);
+      renderChart(treatment.getSimplifiedResult());
     });
   }
 
@@ -122,5 +123,39 @@ function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geome
     }
     totalArea = totalArea * Math.pow(25,2) * 0.000247105;
     $("#total-area-raster").html(totalArea.toFixed(2) + " acres");
+  }
+
+  function renderChart(data) {
+    var container = $("<div/>", { id : 'container'});
+    container.highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Percent of Treatment Area Score by Variable'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Variables',
+                colorByPoint: true,
+                data: data
+            }]
+    });
+    $("#final-score").append(container);
   }
 });

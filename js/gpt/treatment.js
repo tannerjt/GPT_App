@@ -117,6 +117,20 @@ function (declare, GP) {
     },
     getResult : function () {
       return this.attributes;
+    },
+    getSimplifiedResult : function () {
+      // for high charts
+      // { name : '', y : val}
+      var simplified = [];
+      for(var key in this.attributes) {
+        if(this.attributes.hasOwnProperty(key)) {
+          var item = {};
+          item.name = this.attributes[key].label;
+          item.y = this.attributes[key].score;
+          simplified.push(item);
+        }
+      }
+      return simplified;
     }
   })
 })
