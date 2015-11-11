@@ -1,0 +1,26 @@
+app_start.png :
+The application layout is very simple and built to be intuitive.  
+Instructions are provided upon start that outline
+the two methods to input a treatment polygon for analysis.
+
+method_draw.png :
+Users can select 'Draw Treatment Poly' to manually draw a polygon that
+represents a proposed treatment area.
+
+method_upload.png :
+Users can also choose to upload a shapefile of a proposed treatment 
+are to the application for analysis.  
+
+analysis.png :
+While the geoprocessing service works to generate a result, a brief 
+message is displayed.  Operations may take several seconds to process.
+
+result_chart.png :
+various information is provided to the user after analyzing the input
+polygon.  The final priority score is displayed prominently at the top of 
+the page.  Below is a breakdown of the score both in list and chart form.
+
+result_breakdown.png :
+as the user scrolls down the page, additional information is provided that 
+explains the individual variables that influenced how the score was determined.
+

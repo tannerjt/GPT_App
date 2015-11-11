@@ -1,0 +1,12 @@
+Description:
+Euclidean distance to developed areas.
+
+Layers: Compiled
+Communities
+National Parks Service Facilities
+Private structures
+
+Creation:
+To create the raster layer; euclidean distance layers were created from private communities, 
+NPS facilities, and private structures.
+ 

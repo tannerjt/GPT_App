@@ -1,0 +1,15 @@
+Description:
+Using feedback from local Fire Managers, the resistance to control layer defined how hard
+it is to respond to a fire due to certain conditions.  These conditions include vegetation 
+(fuel) types, aspect, slope, and distance from a known road (length of hose on engine).
+
+Layers:
+Elevation (https://www.arcgis.com/home/item.html?id=58a541efc59545e6b7137f961d7de883)
+Roads
+
+Creation:
+Slope and aspect were created from a digital elevation model attained from ArcGIS Online.
+The roads raster was created using euclidean distance analysis from road centerline data.
+These layers were added together and reclassified based on generally decided upon scores.  
+
+

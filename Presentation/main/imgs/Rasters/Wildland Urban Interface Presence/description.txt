@@ -1,0 +1,13 @@
+Description:
+A Wildland Urban Influence refers to the transitional area between unoccupied land and
+human development.
+
+Layers:
+Powerlines
+Pipelines
+National Parks Service Facilities
+Private Structures
+Private Communities
+
+Creation:
+To create the raster layer, a 100 foot buffer was created around all included layers.

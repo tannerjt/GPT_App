@@ -1,0 +1,13 @@
+Description:
+This layer represents areas where there are potential or known threatened 
+and endangered species presence.
+
+Layers:
+Decurrent False Aster
+Turkeybeard
+
+Creation:
+1. Merged Turkeybeard and Aster presence into a single layer
+
+
+
