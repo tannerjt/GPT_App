@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>GPT Tool</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<style>
+			.ss {
+				height : 425px;
+			}
+		</style>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>Geospatial Prioritization Tool</h2>
+					<h4>Numerical Score Generation Determines the Priority of Proposed Fire Treatment Areas</h4>
+					<p>
+						<small>Joshua Tanner, B.S. and Justin Shedd, M.S</small>
+					</p>
+				</section>
+
+				<section>
+					<h3>Background</h3>
+					<p>The Geospatial Prioritization Tool allows fire managers to propose fire treatment areas and understand the how it interacts with several important variables.
+						 A final priority score is returned that will allow multiple proposed areas to be compared against each other.</p>
+				</section>
+
+				<section>
+					<h3>Workflow</h3>
+					<ol>
+						<li>Create and Submit Geometry</li>
+						<li>GP Service Runs Python Logic on Server</li>
+						<li>Geometry Used as Mask for Raster Layers Stored in Enterprise Geodatabase</li>
+						<li>Returns JSON of Raster Statistics</li>
+						<li>Consumes and Interprets Results</li>
+						<li>Display Results in Web Application</li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>Project Process</h3>
+					<ul>
+						<li>Spatial Analysis</li>
+						<li>Geoprocessing Service</li>
+						<li>Application Development</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Spatial Analysis</h3>
+					<p>Raster surfaces were created with each cell representing an agreed
+						 upon score.</p>
+				</section>
+
+				<!-- SPATIAL ANALYSIS SLIDES -->
+				<section>
+					<h3>Wildland Urban Interface</h3>
+					<img class="ss" src="./imgs/Rasters/Wildland Urban Interface Presence/powerlines.png" alt="Analysis Layer Img">
+					<p>Transitional area between unoccupied land and
+human development.</p>
+				</section>
+				<section>
+					<h3>Distance to Developed Areas</h3>
+					<img class="ss" src="./imgs/Rasters/Distance to Developed Areas/distance_to_developed.png" alt="Analysis Layer Img">
+					<p>Euclidean distance to developed areas.</p>
+				</section>
+				<section>
+					<h3>Fire Dedendent T&amp;E Species</h3>
+					<img class="ss" src="./imgs/Rasters/Fire Dependent TE Species/fire_dept_species.png" alt="Analysis Layer Img">
+					<p>Areas where there are potential or known threatened and endangered species presence.</p>
+				</section>
+				<section>
+					<h3>Unique / Rare / Remnant Communities</h3>
+					<img class="ss" src="./imgs/Rasters/Unique Rare Remnant Community Type/unique_rare.png" alt="Analysis Layer Img">
+					<p>Areas that have a presence of regionally unique threatened and endangered species.</p>
+				</section>
+				<section>
+					<h3>Resistance to Control</h3>
+					<img class="ss" src="./imgs/Rasters/Resistance to Control/res_to_cont.png" alt="Analysis Layer Img">
+					<p>How hard it is to respond to a fire based on several agreed upon variables (slope, aspect, vegetation, distance to road)</p>
+				</section>
+				<section>
+					<h3>Fuel Continuity</h3>
+					<img class="ss" src="./imgs/Rasters/Fuel Continuity/fuel_continuity.png" alt="Analysis Layer Img">
+					<p>Number of fuel breaks that are present that limit the ability of a fire to spread. Trails, roads, and streams were used to represent these breaks.</p>
+				</section>
+				<section>
+					<h3>Cultural Values Presence</h3>
+					<img class="ss" src="./imgs/Rasters/Cultural Values Presense/cultural.png" alt="Analysis Layer Img">
+					<p>Areas that have a presence of any cultural significant values of interest.</p>
+				</section>
+
+				<section>
+					<h3>Geprocessing Service</h3>
+					<p>A python script was written and published as a GP Service
+						 to accept an Esri JSON feature polygon and use it as a
+						 mask to extract information from the rasters. </p>
+				</section>
+
+				<!-- GEOPROCESSING SLIDES -->
+				<section>
+					<img src="./imgs/Geoprocessing/load_geom.png" alt="loading geometry">
+					<p>Input loaded from Esri Geoservices JSON</p>
+				</section>
+				<section>
+					<img src="./imgs/Geoprocessing/get_stats.png" alt="main function">
+					<p>Mask raster analysis layers with input geometry.</p>
+				</section>
+				<section>
+					<img src="./imgs/Geoprocessing/output_json.png" alt="json output">
+					<p>Output stats in JSON</p>
+				</section>
+
+				<section>
+					<h3>Application Development</h3>
+					<p>A web application was built using JavaScript to provide the input polygon
+						 to the geoprocessing service and interpret the results. It uses Esri’s
+						 JavaScript API and the Dojo framework to build modular components.</p>
+				</section>
+
+				<!-- APPLICATION DEVELOPMENT SLIDES -->
+				<section>
+					<img src="./imgs/App/app_start.png" alt="start screen">
+					<p>The application layout is very simple and built to be intuitive.</p>
+				</section>
+				<section>
+					<img src="./imgs/App/method_draw.png" alt="Manually draw poly">
+					<p>Users can select 'Draw Treatment Poly' to manually draw a
+polygon that represents a proposed treatment area.</p>
+				</section>
+				<section>
+					<img src="./imgs/App/method_upload.png" alt="Upload Shapefile">
+					<p>Users can also choose to upload a shapefile of a proposed
+treatment area to the application for analysis</p>
+				</section>
+				<section>
+					<img src="./imgs/App/result_chart.png" alt="Results Screenshot">
+					<p>Results are provided to the user after analyzing the input polygon.</p>
+				</section>
+				<section>
+					<img src="./imgs/App/result_breakdown.png" alt="Taublar Breakdown">
+					<p>Score is also displayed in a more discriptive table.</p>
+				</section>
+
+				<section>
+					<h3>Links</h3>
+					<ul>
+						<li><a href="http://tannerjt.github.io/GPT_App/" target="_blank">Application</a></li>
+						<li><a href="https://github.com/tannerjt/GPT_App" target="_blank">Code on GitHub</a></li>
+						<li><a href="https://github.com/tannerjt/GPT_App/wiki" target="_blank">Project Wiki</a></li>
+					</ul>
+				</section>
+			</div> <!-- end slides -->
+
+		</div> <!-- end reveal -->
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

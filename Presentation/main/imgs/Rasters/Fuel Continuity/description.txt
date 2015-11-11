@@ -1,0 +1,15 @@
+Description:
+This layer represents how many fuel breaks are present that limit the ability of a fire
+to spread.  Trails, roads, and streams were used to represent these breaks.
+
+Layers:
+Trails
+Roads
+Streams
+
+Creation:
+1. Polyline to raster operation on all layers (270m cell size)
+2. Combine layers using weighted sum analysis (each layer has weight of 1)
+3. Reclassify (0 breaks : 5 points, 1-2 breaks : 3 points, >2 breaks : 0 points)
+
+

@@ -22,7 +22,7 @@ require(["esri/map",
          "dojo/domReady!"],
 function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geometry, ShapeUploader, dom, on, domClass) {
   var map, toolbar, boundary, toggle;
-  var results = []; // store multiple treatments
+  var results = []; // store multiple treatments (currently not used)
 
   map = new Map("map", {
     center : [-81.384, 35.136],

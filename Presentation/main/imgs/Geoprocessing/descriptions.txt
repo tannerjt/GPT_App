@@ -1,0 +1,19 @@
+point_to_db.png :
+identify location of every analysis layer in SDE connection
+
+load_geom.png :
+load geometry from Esri geoservices json format to use as treatment area mask for
+raster analysis layers
+
+get_stats.png :
+mask raster analysis layers by the input treatment geometry and store statistics
+into a python dictionary
+
+output_json.png :
+write json output of masked raster layer statistics to output parameter
+
+service_ss.png :
+screenshot of geoprocessing service created using ArcGIS Server
+
+service_output_ss.png : 
+output of running service in json
