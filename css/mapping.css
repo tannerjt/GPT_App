@@ -40,3 +40,25 @@
 #poly-stats {
   display : none;
 }
+
+.var-title a:visited, a:hover, a:active {
+  text-decoration : none;
+}
+.var-title {
+  border-top : 2px dashed #e3e3e3;
+  border-bottom : 2px dashed #e3e3e3;
+  padding : 8px 0;
+}
+#final-score {
+  text-align : center;
+}
+.score-text {
+  font-size : 50px;
+}
+.score-number {
+  font-size : 50px;
+  margin-top : -20px;
+}
+#variable-table table{
+  width : 100%;
+}

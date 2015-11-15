@@ -122,19 +122,37 @@
         <script id="results-template" type="text/x-handlebars-template">
             <div id="results-container">
                 <div id="final-score">
-                    <h3>Final Score - <span id='score' class='badge'>{{score}} Points</span></h3>
+                    <h3><span class='score-text'>Final Score</span> <span id='score' class='score-number badge'>{{score}}</span></h3>
                 </div>
-                <div id="variable-list">
+                <!-- <div id="variable-list">
                     <ul>
                     {{#each res}}
                         <li><a href="#{{@key}}-details" class="variable-link">{{this.label}}</a> - {{this.score}}</li>
                     {{/each}}
                     </ul>
+                </div> -->
+                <div id="variable-table">
+                  <table class="table-bordered table-condensed">
+                    <thead>
+                      <tr>
+                        <th>Variable</th>
+                        <th>Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each res}}
+                      <tr>
+                        <td><a href="#{{@key}}-details" class="variable-link">{{this.label}}</a></td>
+                        <td>{{this.score}}</td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
                 </div>
                 <div id="details-list">
                     <h3>Breakdown</h3>
                     {{#each res}}
-                        <h3>{{this.label}} - <span class='badge'>{{this.score}} Points</span></h3>
+                        <h3 class='var-title'><a href="{{this.info}}" target="_blank">{{this.label}}</a> - <span class='badge'>{{this.score}} Points</span></h3>
                         <div id="{{@key}}-details">
                             {{#each this.layers}}
                                 <h4>{{label}}</h4>

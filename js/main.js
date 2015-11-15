@@ -40,6 +40,7 @@ function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geome
   toggle.startup();
 
   function activateToolbar() {
+    map.disableScrollWheelZoom();
     // activate draw
     toolbar = new Draw(map);
     toolbar.on('draw-end', addToMap);
@@ -157,5 +158,6 @@ function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geome
             }]
     });
     $("#final-score").append(container);
+    $(window).resize();
   }
 });

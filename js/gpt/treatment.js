@@ -12,6 +12,7 @@ function (declare, GP) {
       this.attributes = {
             'WUI' : {
               'label' : 'Wildland Urban Interface Presence',
+              'info' : 'https://github.com/tannerjt/GPT_App/wiki/Wildland-Urban-Interface-Presence',
               'score' : undefined,
               'layers' : [
                 { name : 'powerlines', label : 'Powerlines' },
@@ -23,6 +24,7 @@ function (declare, GP) {
             },
             'DEV' : {
               'label' : 'Distance to Developed Areas',
+              'info' : 'https://github.com/tannerjt/GPT_App/wiki/Distance-to-Developed-Areas',
               'score' : undefined,
               'layers' : [
                 { name : 'distance_to_developed_areas', label : 'Distance to Developed Areas'}
@@ -30,6 +32,7 @@ function (declare, GP) {
             },
             'FUEL' : {
               'label' : 'Fuel Continuity',
+              'info' : 'https://github.com/tannerjt/GPT_App/wiki/Fuel-Continuity',
               'score' : undefined,
               'layers' : [
                 { name : 'fire_continuity', label : 'Fuel Continuity' }
@@ -37,6 +40,7 @@ function (declare, GP) {
             },
             'RESIS' : {
               'label' : 'Resistance to Control',
+              'info' : 'https://github.com/tannerjt/GPT_App/wiki/Resistance-to-Control',
               'score' : undefined,
               'layers' : [
                 { name : 'resistance_to_control', label : 'Resistance to Control' }
@@ -44,6 +48,7 @@ function (declare, GP) {
             },
             'TE_RES' : {
               'label' : 'Fire Dependent T&E Species',
+              'info' : 'https://github.com/tannerjt/GPT_App/wiki/Fire-Dependent-T&E-Species',
               'score' : undefined,
               'layers' : [
                 { name : 'fire_dependent_t_e_species', label : 'Fire Dependent T&E Species'}
@@ -51,6 +56,7 @@ function (declare, GP) {
             },
             'RARE' : {
               'label' : 'Unique/Rare/Remnant Community',
+              'info' : 'https://github.com/tannerjt/GPT_App/wiki/Unique-Rare-Remnant-Community',
               'score' : undefined,
               'layers' : [
                 { name : 'unique_and_rare_t_e', label : 'Unique/Rare/Remnant Community' }
@@ -58,6 +64,7 @@ function (declare, GP) {
             },
             'CULTURE' : {
               'label' : 'Cultural Values Presence',
+              'info' : 'https://github.com/tannerjt/GPT_App/wiki/Cultural-Values-Presence',
               'score' : undefined,
               'layers' : [
                 { name : 'cultural_values', label : 'Cultural Values Presence' }
@@ -78,7 +85,7 @@ function (declare, GP) {
         this.attributes[key].score = 0; // init 0
         for(var i = 0; i < layers.length; i++) {
           layers[i].breakdown = result[layers[i].name];
-          // score is the greatest of all layers in 
+          // score is the greatest of all layers in
           // a particular variable
           // stats = are for treatment area
           // summary = is for entire study area
