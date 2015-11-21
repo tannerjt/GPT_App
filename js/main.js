@@ -139,7 +139,7 @@ function (Map, Draw, Graphic, SFS, FeatureLayer, BasemapToggle, Treatment, Geome
                 text: 'Percent of Treatment Area Score by Variable'
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                pointFormat: '<b>{point.y} points</b>'
             },
             plotOptions: {
                 pie: {
