@@ -1,4 +1,4 @@
-#Geospatial Prioritization Tool
+# Geospatial Prioritization Tool
 
 This web application allows Fire Managers with the National Parks Service submit
 treatment proposals and generate a priority score.  The priority score can
@@ -10,19 +10,19 @@ was built as part my course with with North Carolina State University MGIST prog
 
 [View the presentation here](http://tannerjt.github.io/GPT_App/Presentation/main/)
 
-##Backend
+## Backend
 + PostgreSQL
 + ArcSDE
 + ArcGIS Server 10.3
 + Windows Server w/ IIS
 + Python
 
-##Frontend
+## Frontend
 + Esri JavaScript API
 + Dojo
 + jquery
 + Twitter Bootstrap
 + HTML5
 
-##Additional Libraries Used
+## Additional Libraries Used
 + [Shapefile-js by Calvin Metcalf](https://github.com/calvinmetcalf/shapefile-js)
